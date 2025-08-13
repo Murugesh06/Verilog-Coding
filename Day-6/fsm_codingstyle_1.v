@@ -29,29 +29,25 @@ input go,ws,clk,rst_n;
                  DONE = 2'b11;
  reg [1:0] state, next;
  always @(posedge clk or negedge rst_n)
-        if (!rst_n) 
-            state <= IDLE;
-        else 
-            state <= next;
+ if (!rst_n) 
+ state <= IDLE;
+ else 
+ state <= next;
  always @(state or go or ws) begin
-        next = 2'bx;
-        case (state)
-            IDLE: if (go) 
-                      next = READ;
-                  else 
-                      next = IDLE;
-            READ: next = DLY;
-
-            DLY:  if (ws) 
-                      next = READ;
-                  else 
-                      next = DONE;
-
-            DONE: next = IDLE;
-            
-        endcase
-    end
-    assign rd = (state == READ || state == DLY);
-    assign ds = (state == DONE);
-
-endmodule
+ next = 2'bx;
+ case (state)
+ IDLE: if (go) 
+ next = READ;
+ else 
+ next = IDLE;
+ READ: next = DLY;
+ DLY:  if (ws) 
+ next = READ;
+ else 
+ next = DONE;
+ DONE: next = IDLE;
+ endcase
+ end
+ assign rd = (state == READ || state == DLY);
+ assign ds = (state == DONE);
+ endmodule
