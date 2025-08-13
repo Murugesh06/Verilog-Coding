@@ -29,9 +29,8 @@ module fsm_codingstyle_2(ds, rd, go, ws, clk, rst_n);
                     READ = 2'b01,
                     DLY  = 2'b10,
                     DONE = 2'b11;
-
     reg [1:0] state, next;
-     always @(posedge clk or negedge rst_n)
+    always @(posedge clk or negedge rst_n)
         if (!rst_n)
             state <= IDLE;
         else
@@ -45,12 +44,10 @@ module fsm_codingstyle_2(ds, rd, go, ws, clk, rst_n);
                       next = READ;
                   else 
                       next = IDLE;
-
             READ: begin
                       rd = 1'b1;
                       next = DLY;
                   end
-
             DLY: begin
                       rd = 1'b1;
                       if (ws) 
@@ -58,7 +55,6 @@ module fsm_codingstyle_2(ds, rd, go, ws, clk, rst_n);
                       else 
                           next = DONE;
                   end
-
             DONE: begin
                       ds = 1'b1;
                       next = IDLE;
