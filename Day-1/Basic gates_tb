@@ -1,0 +1,16 @@
+module Basic_Gates_TB;
+reg x,y;
+wire out;
+Basic_Gates uut(x,y,out);
+initial begin
+x = 0; y = 0;
+#10
+x = 0; y = 1;
+#10
+x = 1; y = 0;
+#10
+x = 1; y = 1;
+#10
+$finish();
+end
+endmodule
