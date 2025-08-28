@@ -1,0 +1,6 @@
+module CMOS_NOR(input x, y, output f);
+supply0 gnd; 
+wire f; 
+nmos(f, gnd, x); 
+nmos(f, gnd, y); 
+endmodule
