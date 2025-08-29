@@ -1,0 +1,47 @@
+module three_ones_mealy(
+input clk,reset,x,output reg y
+    );
+    localparam [1:0] A=2'b00,
+                     B=2'b01,
+                     C=2'b10;
+    reg [2:0] state,next_state;
+    always @(*)begin
+    case(state)
+    A:begin
+    if(x)begin
+    next_state=B;
+    y=0;
+    end
+    else begin
+     next_state=A;
+     y=0;
+     end
+    end
+    B:begin
+    if(x)begin
+    next_state=C;
+    y=0;
+    end
+    else begin
+     next_state=A;
+     y=0;
+     end
+    end
+    C:begin
+    if(x)begin
+    next_state=C;
+    y=1;
+    end
+    else begin
+     next_state=A;
+     y=0;
+     end
+    end
+    default:next_state=A;
+    endcase
+    end
+    always @(posedge clk)begin
+    if(reset) state<=A;
+    else state<=next_state;
+    end
+endmodule
