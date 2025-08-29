@@ -1,0 +1,24 @@
+module moore_mod4(
+input clk,reset,x,output reg y
+    );
+    reg [1:0] state,next_state;
+    always @(*) begin
+    if(x)begin
+    case(state)
+    2'b00:next_state=2'b01;
+    2'b01:next_state=2'b10;
+    2'b10:next_state=2'b11;
+    2'b11:next_state=2'b00;
+    default:next_state=2'b00;
+    endcase
+    end
+    else next_state=state;
+    end
+    always @(posedge clk)begin
+    if(reset) state<=2'b00;
+    else state<=next_state;
+    end
+    always @(*)begin
+    y=(state==2'b00);
+    end
+endmodule
