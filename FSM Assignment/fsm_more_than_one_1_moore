@@ -1,0 +1,22 @@
+module fsm_more_than_one_1_moore(
+input clk,reset,in_bit,output reg out
+    );
+    reg [2:0]state;
+    always @(posedge clk)begin
+    if(reset) state<=3'b000;
+    else state<={state[1:0],in_bit};
+    end
+    always @(*)begin
+    case(state)
+    3'b000:out=0;
+    3'b001: out = 0; 
+    3'b010: out = 0; 
+    3'b100: out = 0; 
+    3'b011: out = 1; 
+    3'b101: out = 1; 
+    3'b110: out = 1; 
+    3'b111: out = 1; 
+    default: out = 0;
+    endcase 
+    end
+endmodule
