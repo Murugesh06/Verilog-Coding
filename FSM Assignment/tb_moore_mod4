@@ -1,0 +1,32 @@
+
+module tb_moore_mod4;
+reg clk,reset,x;
+wire y;
+moore_mod4 uut(clk,reset,x,y);
+initial clk=0;
+always #5 clk=~clk;
+initial begin
+$display("time |  x  | multiple_of_4");
+$display("-----+-----+--------------");
+reset = 1; x = 0; @(posedge clk);
+@(posedge clk);
+reset = 0;
+
+        
+        x = 1; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 1; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 0; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 1; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 1; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 1; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 1; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 1; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 0; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 0; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 1; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 1; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 1; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+        x = 1; @(posedge clk); #1 $display("%4t |  %b  |      %b", $time, x, y);
+#20 $finish();
+endh
+endmodule
