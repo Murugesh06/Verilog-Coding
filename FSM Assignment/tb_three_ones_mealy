@@ -1,0 +1,18 @@
+module tb_three_ones_mealy;
+reg clk,reset,x;
+wire y;
+three_ones_mealy uut(clk,reset,x,y);
+initial begin
+clk=0;
+#5 forever clk=~clk;
+end
+initial begin
+$monitor("x=%b y=%b",x,y);
+reset=1;x=1;#10;
+reset=0;x=1;#10;
+x=1;#10;
+x=1;#10;
+x=0;#10;
+$finish();
+end
+endmodule
