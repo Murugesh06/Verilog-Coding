@@ -1,0 +1,23 @@
+module moore_parity(
+input clk,reset,x,output reg even_one,odd_one,even_zero,odd_zero
+    );
+    reg [1:0] state,next_state;
+    always @(*)begin
+    next_state=state;
+    case(x) 
+    1'b1:next_state={~state[1],state[0]};
+    1'b0:next_state={state[1],~state[0]};
+    default:next_state=state;
+    endcase
+    end
+    always @(posedge clk)begin
+    if(reset) state<=2'b00;
+    else state<=next_state;
+    end
+    always @(*)begin
+    even_one=~state[1];
+    odd_one=state[1];
+    even_zero=~state[0];
+    odd_zero=state[1];
+    end
+endmodule
