@@ -1,0 +1,24 @@
+
+module tb_fsm_on_off;
+reg clk,reset,j,k;
+wire out;
+fsm_on_off uut(clk,reset,j,k,out);
+initial clk=0;
+always #5 clk=~clk;
+initial begin
+$monitor("Time=%0t | reset=%b j=%b k=%b | state_out=%b", $time, reset, j, k, out);
+reset = 1; j = 0; k = 0;
+#10
+reset =0;
+
+j=1;k=0;
+#10
+j=0;k=0;
+#10
+j=0;k=1;
+#10
+j=1;k=1;
+#10
+$finish();
+end
+endmodule
