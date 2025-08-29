@@ -1,0 +1,16 @@
+module fsm_switch_cases(
+input clk,reset,a,output reg[1:0]state
+    );
+    always @(posedge clk or posedge reset)begin
+    if(reset) state<=2'b00;
+    else begin
+    case(state)
+    2'b00:state=a?2'b10:2'b01;
+    2'b01:state=a?2'b11:2'b00;
+    2'b10:state=a?2'b00:2'b11;
+    2'b11:state=a?2'b01:2'b10;
+    default:state<=2'b00;
+    endcase
+    end
+    end
+endmodule
