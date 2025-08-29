@@ -1,0 +1,36 @@
+module tb_moore_parity;
+reg clk,reset,x;
+wire even_one, odd_one, even_zero, odd_zero;
+moore_parity uut(clk,reset,x,even_one, odd_one, even_zero, odd_zero);
+initial clk=0;
+always #5 clk=~clk;
+ initial begin
+        $display("time | x | even_one odd_one | even_zero odd_zero");
+        $display("-----+---+----------------+-------------------");
+
+        // reset
+        reset = 0; x = 0; #12;
+        reset = 1; #8;
+
+        // apply a test sequence (serial): 1,1,0,1,0,0,1
+        // We'll sample at rising edge; display after state update
+        apply(1); // 1 -> ones odd (1), zeros even (0)
+        apply(1); // 1 -> ones even (0), zeros even (0)
+        apply(0); // 0 -> ones even (0), zeros odd (1)
+        apply(1); // 1 -> ones odd (1), zeros odd (1)
+        apply(0); // 0 -> ones odd (1), zeros even (0)
+        apply(0); // 0 -> ones odd (1), zeros odd (1)
+        apply(1); // 1 -> ones even (0), zeros odd (1)
+
+        #20 $finish;
+    end
+
+    task apply(input reg bit_in);
+        begin
+            x = bit_in;
+            @(posedge clk); 
+            #1; 
+            $display("%4t | %b |    %b      %b   |     %b       %b", $time, x, even_one, odd_one, even_zero, odd_zero);
+        end
+    endtask
+endmodule
