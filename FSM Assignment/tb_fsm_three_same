@@ -1,0 +1,24 @@
+module tb_fsm_three_same;
+reg clk,reset,x;
+wire y;
+fsm_three_same uut(clk,reset,x,y);
+always #5 clk=~clk;
+task apply_sequence(input [15:0]seq,input integer len);
+integer i;
+begin
+for(i=len-1;i>=0;i=i-1)begin
+x=seq[i];
+@(posedge clk);
+$display("Time=%0t | x=%b | y=%b | state=%b",$time, x, y, uut.state);
+end
+end
+endtask
+initial begin
+clk=0;reset=1;x=0;
+#12 reset=0;
+apply_sequence(16'b0000000000000111, 3);
+apply_sequence(16'b0000000000101010, 6);
+apply_sequence(16'b0000000000000111, 6);
+$finish();
+end
+endmodule
