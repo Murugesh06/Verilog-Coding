@@ -1,0 +1,60 @@
+module stopwatch #(
+    parameter CLK_FREQ = 100_000_000  // FPGA clock (Hz), default = 100MHz
+)(
+    input  wire clk,          
+    input  wire reset,        
+    input  wire start_stop,   
+    output reg [5:0] sec,     
+    output reg [9:0] ms,      
+    output reg running        
+);
+
+    // 1) Generate 1 ms tick
+
+    localparam integer MS_TICK_MAX = CLK_FREQ/1000;
+    reg [$clog2(MS_TICK_MAX)-1:0] tick_cnt = 0;
+    reg ms_tick;
+
+    always @(posedge clk) begin
+        if (tick_cnt == MS_TICK_MAX-1) begin
+            tick_cnt <= 0;
+            ms_tick  <= 1'b1;
+        end else begin
+            tick_cnt <= tick_cnt + 1;
+            ms_tick  <= 1'b0;
+        end
+    end
+
+   
+    // 2) Start/Stop toggle
+    
+    reg start_stop_prev;
+    always @(posedge clk) begin
+        start_stop_prev <= start_stop;
+        if (reset) 
+            running <= 1'b0;
+        else if (start_stop & ~start_stop_prev)
+            running <= ~running;
+    end
+
+    
+    // 3) Stopwatch counters
+    
+    always @(posedge clk) begin
+        if (reset) begin
+            sec <= 0;
+            ms  <= 0;
+        end else if (running && ms_tick) begin
+            if (ms == 999) begin
+                ms <= 0;
+                if (sec == 59)
+                    sec <= 0;
+                else
+                    sec <= sec + 1;
+            end else begin
+                ms <= ms + 1;
+            end
+        end
+    end
+
+endmodule
