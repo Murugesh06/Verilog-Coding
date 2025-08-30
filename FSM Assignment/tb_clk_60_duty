@@ -1,0 +1,17 @@
+
+module tb_clk_60_duty;
+reg clk,reset;
+wire clk_out;
+clk_60_duty uut(clk,reset,clk_out);
+always #5 clk=~clk;
+initial begin
+clk=0;
+reset=1;
+#20 reset=0;
+#200 $finish();
+end
+initial begin
+$monitor("Time=%0t | clk=%b | clk_out=%b | count=%0d", 
+                 $time, clk, clk_out, uut.count);
+                 end 
+endmodule
