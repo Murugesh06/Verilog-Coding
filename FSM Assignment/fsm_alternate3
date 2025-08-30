@@ -1,0 +1,62 @@
+
+module fsm_alternate3(
+input clk,reset,x,output reg y
+    );
+    parameter A=2'b00,
+              B=2'b01,
+              C=2'b10,
+              D=2'b11;
+    reg [1:0]state,next_state;
+    always @(*)begin
+    case(state)
+    A:begin
+    if(x)begin
+    next_state=B;
+    y=0;
+    end
+    else begin
+    next_state=A;
+    y=0;
+    end
+    end
+    
+    B:begin
+    if(x)begin
+    next_state=D;
+    y=0;
+    end
+    else begin
+    next_state=C;
+    y=1;   //010 detected
+    end
+    end
+    
+    C:begin
+    if(x)begin
+    next_state=B;
+    y=1;   //101 detected
+    end
+    else begin
+    next_state=A;
+    y=0;
+    end
+    end
+    
+    D:begin
+    if(x)begin
+    next_state=D;
+    y=0;
+    end
+    else begin
+    next_state=C;
+    y=0;
+    end
+    end
+    endcase
+    end
+    
+    always @(posedge clk or posedge reset)begin
+    if(reset) state<=A;
+    else state<=next_state;
+    end
+endmodule
