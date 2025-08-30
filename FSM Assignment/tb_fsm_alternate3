@@ -1,0 +1,24 @@
+
+module tb_fsm_alternate3;
+reg clk,reset,x;
+wire y;
+fsm_alternate3 uut(clk,reset,x,y);
+always #5 clk=~clk;
+initial begin
+clk=0;reset=1;x=0;
+#10 reset=0;
+   // Test sequence: 0 1 0 1 1 0 1 0
+#10 x = 0;
+#10 x = 1;
+#10 x = 0;
+#10 x = 1;
+#10 x = 1;
+#10 x = 0;
+#10 x = 1;
+#10 x = 0;
+#20 $finish;
+end
+initial begin
+        $monitor("x=%b | y=%b | state=%b", x, y, uut.state);               
+    end
+endmodule
