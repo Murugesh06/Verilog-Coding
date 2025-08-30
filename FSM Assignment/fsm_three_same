@@ -1,0 +1,36 @@
+module fsm_three_same(
+input clk,reset,x,output reg y
+    );
+    localparam [2:0]
+        S0      = 3'b000,
+        ONE1    = 3'b001,
+        ONE2    = 3'b010,
+        ONE3P   = 3'b011, 
+        ZERO1   = 3'b100,
+        ZERO2   = 3'b101,
+        ZERO3P  = 3'b110; 
+        
+    reg [2:0] state,next_state;
+    always @(*)begin
+    case(state)
+    S0:     next_state = (x ? ONE1  : ZERO1);   
+    ONE1:   next_state = (x ? ONE2  : ZERO1);
+    ONE2:   next_state = (x ? ONE3P : ZERO1);
+    ONE3P:  next_state = (x ? ONE3P : ZERO1);
+    ZERO1:  next_state = (x ? ONE1  : ZERO2);
+    ZERO2:  next_state = (x ? ONE1  : ZERO3P);
+    ZERO3P: next_state = (x ? ONE1  : ZERO3P);
+    default: next_state = S0;
+    endcase
+    end
+    always @(posedge clk)begin
+    if(reset) state<=S0;
+    else state<=next_state;
+    end
+    always @(*)begin
+    case(state)
+    ONE3P,ZERO3P:y=1;
+    default:y=0;
+    endcase
+    end
+endmodule
