@@ -1,0 +1,8 @@
+module MUX_Using_Switch(out, s, i0, i1 );
+output out; 
+input s, i0, i1; 
+wire sbar; 
+not (sbar, s);
+cmos (out, i0, sbar, s); 
+cmos (out, i1, s, sbar);
+endmodule
