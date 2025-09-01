@@ -1,0 +1,16 @@
+module Two_One_MUX_TB;
+reg s1,i0,i1;
+wire out;
+Two_One_MUX uut(s1,i0,i1,out);
+initial begin
+s1 = 0; i0 = 1; i1 = 0;
+#10
+i0 = 0; i1 = 1;
+#10
+s1 = 1; i0 = 1; i1 = 0;
+#10
+i0 = 0; i1 = 1;
+#10
+$finish();
+end
+endmodule
