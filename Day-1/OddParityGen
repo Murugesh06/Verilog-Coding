@@ -1,0 +1,6 @@
+module Odd_Parity_Gen(input d3,d2,d1,d0,output out);
+wire xout1,xout2,xout3;
+xor(xout1,d3,d2);
+xor(xout2,xout1,d1);
+xor(xout3,xout2,d0);
+endmodule
