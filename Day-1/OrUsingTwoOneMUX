@@ -1,0 +1,7 @@
+module Or_Using_TwoOneMUX(input a,b,output y);
+wire a_not,w1,w2;
+not(a_not,a);
+and(w1,a_not,b);
+and(w2,a,1'b1);
+or(y,w1,w2);
+endmodule
