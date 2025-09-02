@@ -1,0 +1,16 @@
+module DMUX_Bitwise_TB;
+reg d,s;
+wire y0,y1;
+DMUX_Bitwise uut(d,s,y0,y1);
+initial begin
+s=0;d=0;
+#10
+s=0;d=1;
+#10
+s=1;d=0;
+#10
+s=1;d=1;
+#10
+$finish();
+end
+endmodule
