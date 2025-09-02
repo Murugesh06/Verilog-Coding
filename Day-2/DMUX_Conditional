@@ -1,0 +1,4 @@
+module DMUX_Conditional(input d,s,output y0,y1);
+assign y0=(s==0)?d:1'b0;
+assign y1=(s==1)?d:1'b0;
+endmodule
