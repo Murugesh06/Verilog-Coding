@@ -1,0 +1,24 @@
+module counter_tb;
+  reg clk,resetn,up_down;
+  wire [2:0]  ctr;
+  counter uut(clk,resetn,up_down,ctr);
+ initial begin
+   clk=0;
+   forever #5 clk=~clk;
+ end
+  initial begin
+   
+    resetn=0;
+    up_down=0;
+    #12
+    resetn=1;
+    up_down=1;
+    #20
+    up_down=0;
+    
+    $finish();
+  end
+  initial begin
+    $monitor("up_down=%d, count=%d",up_down,ctr);
+  end
+endmodule
