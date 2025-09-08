@@ -1,0 +1,9 @@
+module counter(input clk,resetn,up_down,output reg [2:0] ctr);
+  always @(posedge clk)begin
+    if(!resetn) ctr<=0;
+    else begin
+      if(up_down) ctr<=ctr+1;
+      else ctr<=ctr-1;
+    end
+  end
+endmodule
