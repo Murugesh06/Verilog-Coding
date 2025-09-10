@@ -1,0 +1,11 @@
+
+module function_n_rightshift_tb;
+reg [7:0]data_in;
+reg [2:0]n;
+function_n_rightshift uut();
+initial begin
+data_in=8'b10110110;
+n=3'd2;
+$display("data_in=%b n=%d result=%b",data_in,n,uut.right_shift(data_in,n));
+end
+endmodule
